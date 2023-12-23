@@ -15,8 +15,8 @@ import java.util.Map;
 @Component
 public class JwtConfig {
 
-    @Value("${jwt.secret}")
-    String key ;
+    @Value("$jwt.secret")
+    String key;
 
     //토큰 생성
     public String createToken(User user) {

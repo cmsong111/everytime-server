@@ -8,9 +8,8 @@ import com.untouchable.everytime.User.DTO.UserChangePasswordDTO;
 import com.untouchable.everytime.User.DTO.UserDTO;
 import com.untouchable.everytime.User.Entity.User;
 import com.untouchable.everytime.User.Repository.UserRepository;
-import jakarta.validation.constraints.Null;
+import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,6 +18,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class UserService {
     UserRepository userRepository;
     SchoolRepository schoolRepository;
@@ -27,15 +27,6 @@ public class UserService {
     JwtConfig jwtConfig;
     PasswordEncoder encoder;
 
-    @Autowired
-    public UserService(BoardRepository boardRepository,SchoolRepository schoolRepository, UserRepository userRepository, PasswordEncoder encoder, JwtConfig jwtConfig, ModelMapper modelMapper) {
-        this.userRepository = userRepository;
-        this.boardRepository = boardRepository;
-        this.encoder = encoder;
-        this.jwtConfig = jwtConfig;
-        this.modelMapper = modelMapper;
-        this.schoolRepository = schoolRepository;
-    }
 
     public ResponseEntity<String> login(String id, String pwd) {
         Optional<User> user = userRepository.findById(id);

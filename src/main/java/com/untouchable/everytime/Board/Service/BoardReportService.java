@@ -1,17 +1,17 @@
 package com.untouchable.everytime.Board.Service;
 
-import com.untouchable.everytime.Config.JwtConfig;
 import com.untouchable.everytime.Board.Entity.Board;
 import com.untouchable.everytime.Board.Entity.BoardReport;
 import com.untouchable.everytime.Board.Enum.ReportType;
 import com.untouchable.everytime.Board.Repository.BoardReportRepository;
 import com.untouchable.everytime.Board.Repository.BoardRepository;
+import com.untouchable.everytime.Config.JwtConfig;
 import com.untouchable.everytime.School.Entity.School;
 import com.untouchable.everytime.School.Repository.SchoolRepository;
 import com.untouchable.everytime.User.Entity.User;
 import com.untouchable.everytime.User.Repository.UserRepository;
+import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +19,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class BoardReportService {
     BoardReportRepository boardReportRepository;
     UserRepository userRepository;
@@ -26,16 +27,6 @@ public class BoardReportService {
     BoardRepository boardRepository;
     JwtConfig jwtConfig;
     ModelMapper modelMapper;
-
-    @Autowired
-    public BoardReportService(SchoolRepository schoolRepository,UserRepository userRepository, BoardRepository boardRepository, BoardReportRepository boardReportRepository, JwtConfig jwtConfig, ModelMapper modelMapper) {
-        this.boardReportRepository = boardReportRepository;
-        this.jwtConfig = jwtConfig;
-        this.modelMapper = modelMapper;
-        this.boardRepository = boardRepository;
-        this.userRepository = userRepository;
-        this.schoolRepository = schoolRepository;
-    }
 
     public ResponseEntity<String> reportBoard(Long id, String token, ReportType report) {
         Map<String, Object> jwt = jwtConfig.verifyJWT(token);

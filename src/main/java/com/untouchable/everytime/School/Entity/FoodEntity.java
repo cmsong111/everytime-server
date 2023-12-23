@@ -1,6 +1,5 @@
 package com.untouchable.everytime.School.Entity;
 
-import com.untouchable.everytime.School.Entity.School;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

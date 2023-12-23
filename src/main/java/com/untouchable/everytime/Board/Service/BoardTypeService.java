@@ -6,8 +6,8 @@ import com.untouchable.everytime.Board.Repository.BoardTypeRepository;
 import com.untouchable.everytime.Config.JwtConfig;
 import com.untouchable.everytime.School.Entity.School;
 import com.untouchable.everytime.School.Repository.SchoolRepository;
+import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +17,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class BoardTypeService {
 
     BoardTypeRepository boardTypeRepository;
@@ -24,13 +25,6 @@ public class BoardTypeService {
     SchoolRepository schoolRepository;
     JwtConfig jwtConfig;
 
-    @Autowired
-    public BoardTypeService(JwtConfig jwtConfig,SchoolRepository schoolRepository,BoardTypeRepository boardTypeRepository, ModelMapper modelMapper) {
-        this.boardTypeRepository = boardTypeRepository;
-        this.modelMapper = modelMapper;
-        this.schoolRepository = schoolRepository;
-        this.jwtConfig = jwtConfig;
-    }
 
     public BoardTypeDTO createBoardType(BoardTypeDTO boardTypeDTO) {
         BoardType boardType = modelMapper.map(boardTypeDTO, BoardType.class);

@@ -1,16 +1,16 @@
 package com.untouchable.everytime.Board.Controller;
 
+import com.untouchable.everytime.Board.DTO.BoardCommentResponseDTO;
 import com.untouchable.everytime.Board.DTO.BoardRequestDTO;
 import com.untouchable.everytime.Board.Enum.ReportType;
-import com.untouchable.everytime.Config.JwtConfig;
-import com.untouchable.everytime.Board.DTO.BoardCommentResponseDTO;
 import com.untouchable.everytime.Board.Service.BoardCommentService;
 import com.untouchable.everytime.Board.Service.BoardRecommendService;
+import com.untouchable.everytime.Config.JwtConfig;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,20 +20,13 @@ import java.util.Map;
 @Tag(name = "댓글", description = "게시글 댓글 관련 API")
 @RestController
 @RequestMapping("/boardComment")
+@AllArgsConstructor
 public class BoardCommentController {
 
     BoardCommentService boardCommentService;
     BoardRecommendService boardRecommendService;
-
-
     JwtConfig jwtConfig;
 
-    @Autowired
-    public BoardCommentController(BoardCommentService boardCommentService, JwtConfig jwtConfig, BoardRecommendService boardRecommendService) {
-        this.boardCommentService = boardCommentService;
-        this.jwtConfig = jwtConfig;
-        this.boardRecommendService = boardRecommendService;
-    }
 
 
     @PostMapping("/{id}")

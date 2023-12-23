@@ -2,18 +2,18 @@ package com.untouchable.everytime.Board.Service;
 
 
 import com.untouchable.everytime.Board.DTO.BoardRequestDTO;
-import com.untouchable.everytime.Board.Entity.BoardType;
-import com.untouchable.everytime.Board.Repository.BoardTypeRepository;
-import com.untouchable.everytime.Config.JwtConfig;
 import com.untouchable.everytime.Board.DTO.BoardResponseDTO;
 import com.untouchable.everytime.Board.Entity.Board;
+import com.untouchable.everytime.Board.Entity.BoardType;
 import com.untouchable.everytime.Board.Repository.BoardRepository;
+import com.untouchable.everytime.Board.Repository.BoardTypeRepository;
+import com.untouchable.everytime.Config.JwtConfig;
 import com.untouchable.everytime.School.Entity.School;
 import com.untouchable.everytime.School.Repository.SchoolRepository;
 import com.untouchable.everytime.User.Entity.User;
 import com.untouchable.everytime.User.Repository.UserRepository;
+import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +24,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class BoardService {
 
     BoardRepository boardRepository;
@@ -32,16 +33,6 @@ public class BoardService {
     UserRepository userRepository;
     ModelMapper modelMapper;
     JwtConfig jwtConfig;
-
-    @Autowired
-    public BoardService(BoardTypeRepository boardTypeRepository, UserRepository userRepository, SchoolRepository schoolRepository, BoardRepository boardRepository, ModelMapper modelMapper, JwtConfig jwtConfig) {
-        this.boardRepository = boardRepository;
-        this.schoolRepository = schoolRepository;
-        this.modelMapper = modelMapper;
-        this.jwtConfig = jwtConfig;
-        this.userRepository = userRepository;
-        this.boardTypeRepository = boardTypeRepository;
-    }
 
     public ResponseEntity<BoardResponseDTO> addBoard(BoardRequestDTO boardRequestDTO, String token) {
         Map<String, Object> jwt = jwtConfig.verifyJWT(token);

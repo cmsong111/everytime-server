@@ -10,22 +10,18 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "사용자", description = "유저 정보 CRUD 관련 API")
 @RestController
+@AllArgsConstructor
 @RequestMapping("/user")
 public class UserController {
+
     UserService userService;
     JwtConfig jwtConfig;
-
-    @Autowired
-    public UserController(UserService userService, JwtConfig jwtConfig) {
-        this.userService = userService;
-        this.jwtConfig = jwtConfig;
-    }
 
     @PostMapping("/login")
     @Operation(summary = "로그인", description = "ID, PWD를 입력받아 JWT 발급하는 기능")

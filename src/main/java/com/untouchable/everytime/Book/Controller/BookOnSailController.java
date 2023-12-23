@@ -8,7 +8,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,15 +16,11 @@ import java.util.ArrayList;
 
 @Tag(name = "BookOnSail", description = "책 판매 관련 API")
 @RestController
+@AllArgsConstructor
 @RequestMapping("/bookOnSail")
 public class BookOnSailController {
 
     BookOnSailService bookOnSailService;
-
-    @Autowired
-    public BookOnSailController(BookOnSailService bookOnSailService) {
-        this.bookOnSailService = bookOnSailService;
-    }
 
     @PostMapping("/create")
     @Operation(summary = "책 판매 등록", description = "책 판매글을 등록하는 기능")

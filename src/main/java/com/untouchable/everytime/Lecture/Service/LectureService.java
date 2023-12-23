@@ -13,8 +13,6 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Optional;
 
-import static org.springframework.http.ResponseEntity.ok;
-
 @Service
 public class LectureService {
 

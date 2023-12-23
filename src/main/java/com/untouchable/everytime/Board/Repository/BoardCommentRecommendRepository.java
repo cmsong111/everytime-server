@@ -1,6 +1,5 @@
 package com.untouchable.everytime.Board.Repository;
 
-import com.untouchable.everytime.Board.Entity.Board;
 import com.untouchable.everytime.Board.Entity.BoardComment;
 import com.untouchable.everytime.Board.Entity.BoardCommentRecommend;
 import com.untouchable.everytime.User.Entity.User;

@@ -6,7 +6,7 @@ import com.untouchable.everytime.School.Service.SchoolService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,15 +14,11 @@ import java.util.ArrayList;
 
 @Tag(name = "학교", description = "학교 CRUD API")
 @RestController
+@AllArgsConstructor
 @RequestMapping("/school")
 public class SchoolController {
 
     SchoolService schoolService;
-
-    @Autowired
-    public SchoolController(SchoolService schoolService) {
-        this.schoolService = schoolService;
-    }
 
     @PostMapping("/create")
     @Operation(summary = "학교 생성", description = "학교 생성하는 API")

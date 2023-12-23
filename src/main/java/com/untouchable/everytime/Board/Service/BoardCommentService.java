@@ -1,24 +1,23 @@
 package com.untouchable.everytime.Board.Service;
 
+import com.untouchable.everytime.Board.DTO.BoardCommentResponseDTO;
 import com.untouchable.everytime.Board.DTO.BoardRequestDTO;
+import com.untouchable.everytime.Board.Entity.Board;
+import com.untouchable.everytime.Board.Entity.BoardComment;
 import com.untouchable.everytime.Board.Entity.BoardCommentRecommend;
 import com.untouchable.everytime.Board.Entity.BoardCommentReport;
 import com.untouchable.everytime.Board.Enum.ReportType;
 import com.untouchable.everytime.Board.Repository.BoardCommentRecommendRepository;
 import com.untouchable.everytime.Board.Repository.BoardCommentReportRepository;
+import com.untouchable.everytime.Board.Repository.BoardCommentRepository;
+import com.untouchable.everytime.Board.Repository.BoardRepository;
 import com.untouchable.everytime.Config.JwtConfig;
-import com.untouchable.everytime.Board.DTO.BoardCommentResponseDTO;
-import com.untouchable.everytime.Board.Entity.BoardComment;
-import com.untouchable.everytime.Board.Entity.Board;
 import com.untouchable.everytime.School.Entity.School;
 import com.untouchable.everytime.School.Repository.SchoolRepository;
 import com.untouchable.everytime.User.Entity.User;
-import com.untouchable.everytime.Board.Repository.BoardCommentRepository;
-import com.untouchable.everytime.Board.Repository.BoardRepository;
 import com.untouchable.everytime.User.Repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +28,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class BoardCommentService {
     BoardCommentRepository boardCommentRepository;
     BoardCommentRecommendRepository boardCommentRecommendRepository;
@@ -39,17 +39,6 @@ public class BoardCommentService {
     ModelMapper modelMapper;
     JwtConfig jwtConfig;
 
-    @Autowired
-    public BoardCommentService(BoardCommentReportRepository boardCommentReportRepository, BoardCommentRecommendRepository boardCommentRecommendRepository, SchoolRepository schoolRepository, UserRepository userRepository, BoardRepository boardRepository, BoardCommentRepository boardCommentRepository, ModelMapper strictMapper, JwtConfig jwtConfig) {
-        this.boardCommentRepository = boardCommentRepository;
-        this.boardCommentReportRepository = boardCommentReportRepository;
-        this.modelMapper = strictMapper;
-        this.jwtConfig = jwtConfig;
-        this.boardRepository = boardRepository;
-        this.userRepository = userRepository;
-        this.schoolRepository = schoolRepository;
-        this.boardCommentRecommendRepository = boardCommentRecommendRepository;
-    }
 
     public ResponseEntity<BoardCommentResponseDTO> addBoardComment(BoardRequestDTO boardRequestDTO, Long id, String token) {
         Map<String, Object> jwt = jwtConfig.verifyJWT(token);

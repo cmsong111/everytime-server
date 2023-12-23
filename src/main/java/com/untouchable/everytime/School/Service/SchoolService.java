@@ -4,8 +4,8 @@ import com.untouchable.everytime.School.DTO.SchoolInfoDTO;
 import com.untouchable.everytime.School.DTO.SchoolListDTO;
 import com.untouchable.everytime.School.Entity.School;
 import com.untouchable.everytime.School.Repository.SchoolRepository;
+import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -14,16 +14,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class SchoolService {
 
     SchoolRepository schoolRepository;
     ModelMapper modelMapper;
-
-    @Autowired
-    public SchoolService(SchoolRepository schoolRepository, ModelMapper modelMapper) {
-        this.schoolRepository = schoolRepository;
-        this.modelMapper = modelMapper;
-    }
 
     public ResponseEntity<SchoolInfoDTO> createSchool(SchoolInfoDTO schoolInfoDTO) {
         School school = modelMapper.map(schoolInfoDTO, School.class);
@@ -56,6 +51,12 @@ public class SchoolService {
         schoolRepository.deleteById(id);
     }
 
+    /**
+     * 회원가입 시 모든 학교 정보 가져오는 기능
+     * 
+     * @return 학교명 전부
+     * @author 김남주
+     */
     public ResponseEntity<ArrayList<SchoolListDTO>> findAllSchool() {
         List<School> schoolEntities = schoolRepository.findAll();
         ArrayList<SchoolListDTO> schoolInfoDTOS = new ArrayList<>();

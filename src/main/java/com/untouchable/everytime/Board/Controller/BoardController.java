@@ -1,41 +1,33 @@
 package com.untouchable.everytime.Board.Controller;
 
 import com.untouchable.everytime.Board.DTO.BoardRequestDTO;
-import com.untouchable.everytime.Board.Enum.ReportType;
-import com.untouchable.everytime.Config.JwtConfig;
 import com.untouchable.everytime.Board.DTO.BoardResponseDTO;
-import com.untouchable.everytime.Board.DTO.BoardScrapDTO;
+import com.untouchable.everytime.Board.Enum.ReportType;
 import com.untouchable.everytime.Board.Service.BoardReportService;
 import com.untouchable.everytime.Board.Service.BoardScrapService;
 import com.untouchable.everytime.Board.Service.BoardService;
+import com.untouchable.everytime.Config.JwtConfig;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 @Tag(name = "게시글", description = "게시글 CRUD 관련 API")
 @RestController
 @RequestMapping("/board")
+@AllArgsConstructor
 public class BoardController {
     BoardScrapService boardScrapService;
     BoardReportService boardReportService;
     BoardService boardService;
     JwtConfig jwtConfig;
 
-    @Autowired
-    public BoardController(BoardScrapService boardScrapService, BoardReportService boardReportService, BoardService boardService, JwtConfig jwtConfig) {
-        this.boardService = boardService;
-        this.jwtConfig = jwtConfig;
-        this.boardReportService = boardReportService;
-        this.boardScrapService = boardScrapService;
-    }
 
     @GetMapping("/{id}")
     @Operation(summary = "게시글 조회", description = "게시글 PK와, JWT를 입력받아 회원 인증 후 특정 게시물 조회 하는 기능")

@@ -4,26 +4,20 @@ import com.untouchable.everytime.Book.DTO.BookRequestDTO;
 import com.untouchable.everytime.Book.DTO.BookResponseDTO;
 import com.untouchable.everytime.Book.Entity.Book;
 import com.untouchable.everytime.Book.Repository.BookRepository;
+import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class BookService {
 
     BookRepository bookRepository;
     ModelMapper modelMapper;
 
-    @Autowired
-    public BookService(BookRepository bookRepository, ModelMapper modelMapper) {
-        this.bookRepository = bookRepository;
-        this.modelMapper = modelMapper;
-    }
 
     public ResponseEntity<BookResponseDTO> createBook(BookRequestDTO bookRequestDTO) {
         // 중복 검사

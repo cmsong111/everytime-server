@@ -3,7 +3,9 @@ package com.untouchable.everytime.Schedule.Entity;
 import com.untouchable.everytime.Lecture.Entity.LectureEntity;
 import com.untouchable.everytime.User.Entity.User;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 @Entity
