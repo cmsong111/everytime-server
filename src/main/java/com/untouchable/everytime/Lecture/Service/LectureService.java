@@ -1,31 +1,25 @@
 package com.untouchable.everytime.Lecture.Service;
 
-import com.untouchable.everytime.Config.JwtConfig;
+
 import com.untouchable.everytime.Lecture.DTO.LectureDTO;
 import com.untouchable.everytime.Lecture.Entity.LectureEntity;
 import com.untouchable.everytime.Lecture.Repository.LectureRepository;
+import io.jsonwebtoken.Claims;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class LectureService {
 
-    LectureRepository lectureRepository;
-    ModelMapper modelMapper;
-    JwtConfig jwtConfig;
+    private final LectureRepository lectureRepository;
+    private final ModelMapper modelMapper;
 
-    @Autowired
-    public LectureService(JwtConfig jwtConfig, LectureRepository lectureRepository, ModelMapper strictMapper) {
-        this.lectureRepository = lectureRepository;
-        this.modelMapper = strictMapper;
-        this.jwtConfig = jwtConfig;
-    }
 
     public LectureDTO createLecture(LectureDTO lectureDTO) {
         LectureEntity lectureEntity = modelMapper.map(lectureDTO, LectureEntity.class);
@@ -44,11 +38,10 @@ public class LectureService {
         lectureRepository.delete(lectureEntity);
     }
 
-    public ArrayList<LectureDTO> getLectureList(int year, int semester, String token) {
-        Map<String, Object> jwt = jwtConfig.verifyJWT(token);
+    public ArrayList<LectureDTO> getLectureList(int year, int semester, String token, Claims claims) {
 
         ArrayList<LectureDTO> lectureDTOArrayList = new ArrayList<>();
-        ArrayList<LectureEntity> lectureEntityArrayList = (ArrayList<LectureEntity>) lectureRepository.findBySchool_SchoolNameAndYearAndSemester(String.valueOf(jwt.get("SCHOOL")), year, semester);
+        ArrayList<LectureEntity> lectureEntityArrayList = (ArrayList<LectureEntity>) lectureRepository.findBySchool_SchoolNameAndYearAndSemester((String) claims.get("schoolname"), year, semester);
 
         for (LectureEntity lectureEntity : lectureEntityArrayList) {
             lectureDTOArrayList.add(modelMapper.map(lectureEntity, LectureDTO.class));

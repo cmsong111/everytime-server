@@ -5,9 +5,9 @@ import com.untouchable.everytime.Board.Entity.Board;
 import com.untouchable.everytime.Board.Entity.BoardScrap;
 import com.untouchable.everytime.Board.Repository.BoardRepository;
 import com.untouchable.everytime.Board.Repository.BoardScrapRepository;
-import com.untouchable.everytime.Config.JwtConfig;
 import com.untouchable.everytime.User.Entity.User;
 import com.untouchable.everytime.User.Repository.UserRepository;
+import io.jsonwebtoken.Claims;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
@@ -24,13 +24,12 @@ public class BoardScrapService {
     BoardScrapRepository boardScrapRepository;
     UserRepository userRepository;
     BoardRepository boardRepository;
-    JwtConfig jwtConfig;
+
     ModelMapper modelMapper;
 
-    public ResponseEntity<ArrayList<BoardResponseDTO>> getMyScrap(String token){
-        Map<String, Object> jwt = jwtConfig.verifyJWT(token);
+    public ResponseEntity<ArrayList<BoardResponseDTO>> getMyScrap(String username){
 
-        Optional<User> userEntity = userRepository.findById(String.valueOf(jwt.get("userId")));
+        Optional<User> userEntity = userRepository.findById(username);
         if (userEntity.isEmpty()) {
             return null;
         }
@@ -49,21 +48,20 @@ public class BoardScrapService {
         return ResponseEntity.ok(result);
     }
 
-    public ResponseEntity<String> scrapBoard(Long id, String token){
-        Map<String, Object> jwt = jwtConfig.verifyJWT(token);
+    public ResponseEntity<String> scrapBoard(Long id, String username){
 
         // Null Check
         Optional<Board> boardEntity = boardRepository.findById(id);
-        Optional<User> userEntity = userRepository.findById(String.valueOf(jwt.get("userId")));
+        Optional<User> userEntity = userRepository.findById(username);
 
         if (boardEntity.isEmpty() || userEntity.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        // 학교 체크
-        if (!boardEntity.get().getSchool().equals(userEntity.get().getUserSchool())) {
-            System.out.println("학교 불일치");
-            return ResponseEntity.badRequest().build();
-        }
+//        // 학교 체크
+//        if (!boardEntity.get().getSchool().equals(userEntity.get().getUserSchool())) {
+//            System.out.println("학교 불일치");
+//            return ResponseEntity.badRequest().build();
+//        }
         // 중복 체크
         if (boardScrapRepository.findByBoardAndUser(boardEntity.get(), userEntity.get()).isPresent()) {
             System.out.println("중복 스크랩");
@@ -84,12 +82,12 @@ public class BoardScrapService {
         return ResponseEntity.ok("스크랩 성공");
     }
 
-    public ResponseEntity<String> unScrapBoard(Long id, String token) {
-        Map<String, Object> jwt = jwtConfig.verifyJWT(token);
+    public ResponseEntity<String> unScrapBoard(Long id, String username) {
+
 
         // Null Check
         Optional<Board> boardEntity = boardRepository.findById(id);
-        Optional<User> userEntity = userRepository.findById(String.valueOf(jwt.get("userId")));
+        Optional<User> userEntity = userRepository.findById(username);
         if (boardEntity.isEmpty() || userEntity.isEmpty()) {
             return ResponseEntity.notFound().build();
         }

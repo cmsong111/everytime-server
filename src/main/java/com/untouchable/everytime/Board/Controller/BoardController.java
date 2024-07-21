@@ -6,7 +6,8 @@ import com.untouchable.everytime.Board.Enum.ReportType;
 import com.untouchable.everytime.Board.Service.BoardReportService;
 import com.untouchable.everytime.Board.Service.BoardScrapService;
 import com.untouchable.everytime.Board.Service.BoardService;
-import com.untouchable.everytime.Config.JwtConfig;
+
+import io.jsonwebtoken.Claims;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -16,6 +17,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.ArrayList;
 
 @Tag(name = "게시글", description = "게시글 CRUD 관련 API")
@@ -26,15 +28,14 @@ public class BoardController {
     BoardScrapService boardScrapService;
     BoardReportService boardReportService;
     BoardService boardService;
-    JwtConfig jwtConfig;
 
 
     @GetMapping("/{id}")
     @Operation(summary = "게시글 조회", description = "게시글 PK와, JWT를 입력받아 회원 인증 후 특정 게시물 조회 하는 기능")
     public ResponseEntity<BoardResponseDTO> getBoard(
             @Parameter(name = "id", description = "게시글 PK", in = ParameterIn.PATH) @PathVariable("id") Long id,
-            @RequestHeader(value = "jwt") String token) {
-        return boardService.findBoardById(id, token);
+            Principal principal) {
+        return boardService.findBoardById(id, principal.getName());
     }
 
 
@@ -44,10 +45,10 @@ public class BoardController {
     @ApiResponse(responseCode = "400", description = "신고 실패")
     public ResponseEntity<String> reportBoard(
             @Parameter(name = "id", description = "게시글 PK", in = ParameterIn.PATH) @PathVariable("id") Long id,
-            @Parameter(name = "jwt", description = "유저 인증 토큰", in = ParameterIn.HEADER) @RequestHeader(value = "jwt") String token,
-            @Parameter(name = "report", description = "신고유형") @RequestParam(name = "report") ReportType report) {
-
-        return boardReportService.reportBoard(id, token, report);
+            Principal principal,
+            @Parameter(name = "report", description = "신고유형") @RequestParam(name = "report") ReportType report,
+            Claims claims) {
+        return boardReportService.reportBoard(id, principal.getName(), report);
     }
 
     @GetMapping("/getBoardByBoardType/{boardTypeId}")

@@ -7,7 +7,6 @@ import com.untouchable.everytime.Board.Entity.Board;
 import com.untouchable.everytime.Board.Entity.BoardType;
 import com.untouchable.everytime.Board.Repository.BoardRepository;
 import com.untouchable.everytime.Board.Repository.BoardTypeRepository;
-import com.untouchable.everytime.Config.JwtConfig;
 import com.untouchable.everytime.School.Entity.School;
 import com.untouchable.everytime.School.Repository.SchoolRepository;
 import com.untouchable.everytime.User.Entity.User;
@@ -32,14 +31,14 @@ public class BoardService {
     BoardTypeRepository boardTypeRepository;
     UserRepository userRepository;
     ModelMapper modelMapper;
-    JwtConfig jwtConfig;
 
-    public ResponseEntity<BoardResponseDTO> addBoard(BoardRequestDTO boardRequestDTO, String token) {
-        Map<String, Object> jwt = jwtConfig.verifyJWT(token);
+    public ResponseEntity<BoardResponseDTO> addBoard(BoardRequestDTO boardRequestDTO, String username) {
+
 
         // Null Check
-        Optional<School> school = schoolRepository.findById(String.valueOf(jwt.get("userSchool")));
-        Optional<User> user = userRepository.findById(String.valueOf(jwt.get("userId")));
+        // TODO: 고치기
+        Optional<School> school = schoolRepository.findById(username);
+        Optional<User> user = userRepository.findById(username);
         Optional<BoardType> boardType = boardTypeRepository.findById(boardRequestDTO.getBoardTypePK());
         if (school.isEmpty() || user.isEmpty() || boardType.isEmpty()) {
             return ResponseEntity.badRequest().build();
@@ -60,18 +59,17 @@ public class BoardService {
         return ResponseEntity.ok(modelMapper.map(result, BoardResponseDTO.class));
     }
 
-    public ResponseEntity<BoardResponseDTO> findBoardById(Long id, String token) {
-        Map<String, Object> jwt = jwtConfig.verifyJWT(token);
+    public ResponseEntity<BoardResponseDTO> findBoardById(Long id, String username) {
         // Null Check
         Optional<Board> boardEntity = boardRepository.findById(id);
-        Optional<User> userEntity = userRepository.findById(String.valueOf(jwt.get("userId")));
+        Optional<User> userEntity = userRepository.findById(username);
         if (boardEntity.isEmpty() || userEntity.isEmpty()) {
             return ResponseEntity.badRequest().build();
         }
-        // Check School
-        if (!boardEntity.get().getSchool().getSchoolName().equals(jwt.get("userSchool"))) {
-            return ResponseEntity.badRequest().build();
-        }
+//        // Check School
+//        if (!boardEntity.get().getSchool().getSchoolName().equals(jwt.get("userSchool"))) {
+//            return ResponseEntity.badRequest().build();
+//        }
         BoardResponseDTO boardResponseDTO = modelMapper.map(boardEntity.get(), BoardResponseDTO.class);
         // Check Anonymity
         if (boardEntity.get().isAnonymity()) {
@@ -81,20 +79,19 @@ public class BoardService {
         return ResponseEntity.ok(boardResponseDTO);
     }
 
-    public ResponseEntity<ArrayList<BoardResponseDTO>> findBoardsByBoardType(Long id, String token) {
-        Map<String, Object> jwt = jwtConfig.verifyJWT(token);
+    public ResponseEntity<ArrayList<BoardResponseDTO>> findBoardsByBoardType(Long id, String username) {
 
         // Null Check
         Optional<BoardType> boardType = boardTypeRepository.findById(id);
-        Optional<User> user = userRepository.findById(String.valueOf(jwt.get("userId")));
+        Optional<User> user = userRepository.findById(username);
         if (boardType.isEmpty() || user.isEmpty()) {
             return ResponseEntity.badRequest().build();
         }
 
-        // Check School
-        if (!boardType.get().getSchool().getSchoolName().equals(jwt.get("userSchool"))) {
-            return ResponseEntity.badRequest().build();
-        }
+//        // Check School
+//        if (!boardType.get().getSchool().getSchoolName().equals(jwt.get("userSchool"))) {
+//            return ResponseEntity.badRequest().build();
+//        }
 
         // Get Board
         ArrayList<BoardResponseDTO> boardResponseDTOS = new ArrayList<>();
@@ -112,16 +109,15 @@ public class BoardService {
     }
 
 
-    public ResponseEntity<BoardResponseDTO> modifyBoard(Long id, BoardRequestDTO boardRequestDTO, String token) {
-        Map<String, Object> jwt = jwtConfig.verifyJWT(token);
+    public ResponseEntity<BoardResponseDTO> modifyBoard(Long id, BoardRequestDTO boardRequestDTO, String username) {
 
         // Null Check
-        Optional<School> school = schoolRepository.findById(String.valueOf(jwt.get("userSchool")));
-        Optional<User> user = userRepository.findById(String.valueOf(jwt.get("userId")));
+//        Optional<School> school = schoolRepository.findById(String.valueOf(jwt.get("userSchool")));
+        Optional<User> user = userRepository.findById(username);
         Optional<Board> board = boardRepository.findById(id);
-        if (school.isEmpty() || user.isEmpty() || board.isEmpty()) {
-            return ResponseEntity.badRequest().build();
-        }
+//        if (school.isEmpty() || user.isEmpty() || board.isEmpty()) {
+//            return ResponseEntity.badRequest().build();
+//        }
 
         // Update Board
         Board boardEntity = board.get();
@@ -133,18 +129,17 @@ public class BoardService {
         return ResponseEntity.ok(modelMapper.map(result, BoardResponseDTO.class));
     }
 
-    public ResponseEntity<String> removeBoard(Long id, String token) {
-        Map<String, Object> jwt = jwtConfig.verifyJWT(token);
+    public ResponseEntity<String> removeBoard(Long id, String username) {
 
         // Null Check
         Optional<Board> board = boardRepository.findById(id);
-        Optional<User> user = userRepository.findById(String.valueOf(jwt.get("userId")));
+        Optional<User> user = userRepository.findById(username);
         if (board.isEmpty() || user.isEmpty()) {
             return ResponseEntity.badRequest().build();
         }
 
         // Delete Board
-        if (board.get().getUser().getUserId().equals(user.get().getUserId())) {
+        if (board.get().getUser().equals(user.get())) {
             boardRepository.deleteById(id);
             return ResponseEntity.ok("Delete Success");
         } else {

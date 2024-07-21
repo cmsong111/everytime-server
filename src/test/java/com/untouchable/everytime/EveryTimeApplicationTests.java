@@ -10,12 +10,10 @@ import org.springframework.test.context.ActiveProfiles;
 @ActiveProfiles("test")
 class EveryTimeApplicationTests {
 
-	@Value("${jwt.secret}")
-	String key ;
 
 	@Test
 	void contextLoads() {
-		System.out.println(key);
+
 	}
 
 }

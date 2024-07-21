@@ -2,12 +2,14 @@ package com.untouchable.everytime.Lecture.Controller;
 
 import com.untouchable.everytime.Lecture.DTO.LectureDTO;
 import com.untouchable.everytime.Lecture.Service.LectureService;
+import io.jsonwebtoken.Claims;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.ArrayList;
 
 //@Tag(name = "Lecture")
@@ -47,8 +49,9 @@ public class LectureController {
     public ArrayList<LectureDTO> getLecture(
             @RequestParam("year") int year,
             @RequestParam("semester") int semester,
-            @RequestHeader("jwt") String token) {
-        return lectureService.getLectureList(year, semester, token);
+            Principal principal,
+            Claims claims) {
+        return lectureService.getLectureList(year, semester, principal.getName(), claims);
     }
 
     @GetMapping("/get/{id}")

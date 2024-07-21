@@ -1,32 +1,66 @@
 package com.untouchable.everytime.User.Entity;
 
-import com.untouchable.everytime.School.Entity.School;
-import com.untouchable.everytime.User.Enum.UserStatus;
+import com.untouchable.everytime.common.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Set;
 
 @Entity
-@Data
 @Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
-@AllArgsConstructor
+@ToString
 @Table(name = "users")
-public class User {
+public class User extends BaseEntity implements UserDetails {
+    /**
+     * User ID
+     */
     @Id
-    private String userId;
-    private String userPwd;
-    private String userName;
-    private String userNickname;
-    private String userEmail;
-    @ManyToOne
-    private School userSchool;
-    private int userRegisteredYear;
-    // @OneToOne
-    // private UserProfileEntity userProfile;
-    private boolean userSchoolVerified;
-    Long userPoint;
+    private String id;
+
+    /**
+     * User Password
+     */
+    private String password;
+
+    /**
+     * User Real Name
+     */
+    private String name;
+
+    /**
+     * User Nickname
+     */
+    private String nickname;
+
+    /**
+     * User Email
+     */
+    @Column(unique = true)
+    private String email;
+
+    /**
+     * User Profile Image
+     */
+    @Column(columnDefinition = "TEXT")
+    private String profileImage;
+
+    /**
+     * User Role
+     */
+    @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
-    private UserStatus userStatus;
+    private Set<Role> authorities;
+
+    /**
+     * Security에서 사용하는 사용자 이름을 반환한다.
+     */
+    @Override
+    public String getUsername() {
+        return this.id;
+    }
 }

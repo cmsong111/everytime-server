@@ -5,7 +5,6 @@ import com.untouchable.everytime.Board.Entity.BoardReport;
 import com.untouchable.everytime.Board.Enum.ReportType;
 import com.untouchable.everytime.Board.Repository.BoardReportRepository;
 import com.untouchable.everytime.Board.Repository.BoardRepository;
-import com.untouchable.everytime.Config.JwtConfig;
 import com.untouchable.everytime.School.Entity.School;
 import com.untouchable.everytime.School.Repository.SchoolRepository;
 import com.untouchable.everytime.User.Entity.User;
@@ -25,24 +24,22 @@ public class BoardReportService {
     UserRepository userRepository;
     SchoolRepository schoolRepository;
     BoardRepository boardRepository;
-    JwtConfig jwtConfig;
     ModelMapper modelMapper;
 
-    public ResponseEntity<String> reportBoard(Long id, String token, ReportType report) {
-        Map<String, Object> jwt = jwtConfig.verifyJWT(token);
+    public ResponseEntity<String> reportBoard(Long id, String username, ReportType report) {
 
         // Null Check
         Optional<Board> boardEntity = boardRepository.findById(id);
-        Optional<User> userEntity = userRepository.findById(String.valueOf(jwt.get("userId")));
-        Optional<School> schoolEntity = schoolRepository.findById(String.valueOf(jwt.get("userSchool")));
-        if (boardEntity.isEmpty() || userEntity.isEmpty() || schoolEntity.isEmpty()) {
-            return ResponseEntity.badRequest().body("잘못된 요청입니다.");
-        }
+        Optional<User> userEntity = userRepository.findById(username);
+//        Optional<School> schoolEntity = schoolRepository.findById(String.valueOf(jwt.get("userSchool")));
+//        if (boardEntity.isEmpty() || userEntity.isEmpty() || schoolEntity.isEmpty()) {
+//            return ResponseEntity.badRequest().body("잘못된 요청입니다.");
+//        }
 
-        // 신고자 학교가 같은지 확인
-        if (!boardEntity.get().getSchool().equals(userEntity.get().getUserSchool())){
-            return ResponseEntity.badRequest().body("잘못된 요청입니다.");
-        }
+//        // 신고자 학교가 같은지 확인
+//        if (!boardEntity.get().getSchool().equals(userEntity.get().getUserSchool())){
+//            return ResponseEntity.badRequest().body("잘못된 요청입니다.");
+//        }
 
         // 신고 중복 확인
         if (boardReportRepository.existsByReportUserAndReportBoard(userEntity.get(), boardEntity.get())) {

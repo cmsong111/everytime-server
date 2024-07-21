@@ -11,11 +11,11 @@ import com.untouchable.everytime.Board.Repository.BoardCommentRecommendRepositor
 import com.untouchable.everytime.Board.Repository.BoardCommentReportRepository;
 import com.untouchable.everytime.Board.Repository.BoardCommentRepository;
 import com.untouchable.everytime.Board.Repository.BoardRepository;
-import com.untouchable.everytime.Config.JwtConfig;
 import com.untouchable.everytime.School.Entity.School;
 import com.untouchable.everytime.School.Repository.SchoolRepository;
 import com.untouchable.everytime.User.Entity.User;
 import com.untouchable.everytime.User.Repository.UserRepository;
+import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
@@ -37,15 +37,13 @@ public class BoardCommentService {
     UserRepository userRepository;
     SchoolRepository schoolRepository;
     ModelMapper modelMapper;
-    JwtConfig jwtConfig;
 
 
-    public ResponseEntity<BoardCommentResponseDTO> addBoardComment(BoardRequestDTO boardRequestDTO, Long id, String token) {
-        Map<String, Object> jwt = jwtConfig.verifyJWT(token);
+    public ResponseEntity<BoardCommentResponseDTO> addBoardComment(BoardRequestDTO boardRequestDTO, Long id, String username, Claims claims) {
 
         // Null check
         Optional<Board> boardEntity = boardRepository.findById(id);
-        Optional<User> userEntity = userRepository.findById(String.valueOf(jwt.get("userId")));
+        Optional<User> userEntity = userRepository.findById(username);
         if (boardEntity.isEmpty() || userEntity.isEmpty()) {
             ResponseEntity.badRequest().build();
         }
@@ -59,13 +57,11 @@ public class BoardCommentService {
         return ResponseEntity.ok(modelMapper.map(boardCommentRepository.save(boardComment), BoardCommentResponseDTO.class));
     }
 
-    public ResponseEntity<ArrayList<BoardCommentResponseDTO>> findCommentByBoard(Long id, String token) {
-        Map<String, Object> jwt = jwtConfig.verifyJWT(token);
-
+    public ResponseEntity<ArrayList<BoardCommentResponseDTO>> findCommentByBoard(Long id, String username, Claims claims) {
         // Null check
         Optional<Board> boardEntity = boardRepository.findById(id);
-        Optional<User> userEntity = userRepository.findById(String.valueOf(jwt.get("userId")));
-        Optional<School> schoolEntity = schoolRepository.findById(String.valueOf(jwt.get("userSchool")));
+        Optional<User> userEntity = userRepository.findById(username);
+        Optional<School> schoolEntity = schoolRepository.findById(claims.get("userSchool").toString());
         if (boardEntity.isEmpty() || userEntity.isEmpty() || schoolEntity.isEmpty()) {
             ResponseEntity.badRequest().build();
         }
@@ -91,11 +87,11 @@ public class BoardCommentService {
 
     }
 
-    public ResponseEntity<BoardCommentResponseDTO> updateBoardComment(BoardRequestDTO boardRequestDTO, Long id, String token) {
-        Map<String, Object> jwt = jwtConfig.verifyJWT(token);
+    public ResponseEntity<BoardCommentResponseDTO> updateBoardComment(BoardRequestDTO boardRequestDTO, Long id, String username) {
+
 
         Optional<BoardComment> boardCommentEntity = boardCommentRepository.findById(id);
-        Optional<User> userEntity = userRepository.findById(String.valueOf(jwt.get("userId")));
+        Optional<User> userEntity = userRepository.findById(username);
         if (boardCommentEntity.isEmpty() || userEntity.isEmpty()) {
             ResponseEntity.badRequest().build();
         }
@@ -112,11 +108,10 @@ public class BoardCommentService {
         return ResponseEntity.ok(modelMapper.map(boardCommentRepository.save(boardComment), BoardCommentResponseDTO.class));
     }
 
-    public ResponseEntity<String> deleteBoardComment(Long id, String token) {
-        Map<String, Object> jwt = jwtConfig.verifyJWT(token);
+    public ResponseEntity<String> deleteBoardComment(Long id, String username) {
 
         Optional<BoardComment> boardCommentEntity = boardCommentRepository.findById(id);
-        Optional<User> userEntity = userRepository.findById(String.valueOf(jwt.get("userId")));
+        Optional<User> userEntity = userRepository.findById(username);
         if (boardCommentEntity.isEmpty() || userEntity.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
@@ -131,11 +126,10 @@ public class BoardCommentService {
         return ResponseEntity.ok("삭제되었습니다.");
     }
 
-    public ResponseEntity<String> addCommentRecommend(Long id, String token) {
-        Map<String, Object> jwt = jwtConfig.verifyJWT(token);
+    public ResponseEntity<String> addCommentRecommend(Long id, String username) {
 
         Optional<BoardComment> boardCommentEntity = boardCommentRepository.findById(id);
-        Optional<User> userEntity = userRepository.findById(String.valueOf(jwt.get("userId")));
+        Optional<User> userEntity = userRepository.findById(username);
         if (boardCommentEntity.isEmpty() || userEntity.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
@@ -158,11 +152,10 @@ public class BoardCommentService {
         return ResponseEntity.ok("추천되었습니다.");
     }
 
-    public ResponseEntity<String> reportCommend(Long id, String token, ReportType reportType) {
-        Map<String, Object> jwt = jwtConfig.verifyJWT(token);
+    public ResponseEntity<String> reportCommend(Long id, String username, ReportType reportType) {
 
         Optional<BoardComment> boardCommentEntity = boardCommentRepository.findById(id);
-        Optional<User> userEntity = userRepository.findById(String.valueOf(jwt.get("userId")));
+        Optional<User> userEntity = userRepository.findById(username);
         if (boardCommentEntity.isEmpty() || userEntity.isEmpty()) {
             return ResponseEntity.notFound().build();
         }

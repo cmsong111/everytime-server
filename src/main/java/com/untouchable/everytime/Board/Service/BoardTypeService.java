@@ -3,14 +3,16 @@ package com.untouchable.everytime.Board.Service;
 import com.untouchable.everytime.Board.DTO.BoardTypeDTO;
 import com.untouchable.everytime.Board.Entity.BoardType;
 import com.untouchable.everytime.Board.Repository.BoardTypeRepository;
-import com.untouchable.everytime.Config.JwtConfig;
+
 import com.untouchable.everytime.School.Entity.School;
 import com.untouchable.everytime.School.Repository.SchoolRepository;
+import io.jsonwebtoken.Claims;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +25,6 @@ public class BoardTypeService {
     BoardTypeRepository boardTypeRepository;
     ModelMapper modelMapper;
     SchoolRepository schoolRepository;
-    JwtConfig jwtConfig;
 
 
     public BoardTypeDTO createBoardType(BoardTypeDTO boardTypeDTO) {
@@ -43,9 +44,9 @@ public class BoardTypeService {
         boardTypeRepository.deleteById(id);
     }
 
-    public ResponseEntity<ArrayList<BoardTypeDTO>> getBoardTypeBySchoolName(String token) {
-        Map<String, Object> jwt = jwtConfig.verifyJWT(token);
-        Optional<School> school = schoolRepository.findById(jwt.get("userSchool").toString());
+    public ResponseEntity<ArrayList<BoardTypeDTO>> getBoardTypeBySchoolName(String username, Claims claims) {
+
+        Optional<School> school = schoolRepository.findById(claims.get("schoolName").toString());
         // 학교가 Null 일 때
         if (school.isEmpty()) {
             return ResponseEntity.notFound().build();
