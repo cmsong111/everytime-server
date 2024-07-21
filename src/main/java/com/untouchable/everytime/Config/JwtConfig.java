@@ -35,7 +35,7 @@ public class JwtConfig {
 
 
 
-        Long expiredTime = 1000 * 60L * 60L * 2L; // 토큰 유효 시간 (2시간)
+        long expiredTime = 1000 * 60L * 60L * 2L; // 토큰 유효 시간 (2시간)
 
         Date ext = new Date(); // 토큰 만료 시간
         ext.setTime(ext.getTime() + expiredTime);

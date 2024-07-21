@@ -1,12 +1,17 @@
-    plugins {
+plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.2.1'
-    id 'io.spring.dependency-management' version '1.1.0'
+    id 'org.springframework.boot' version '3.3.2'
+    id 'io.spring.dependency-management' version '1.1.6'
 }
 
 group = 'com.untouchable'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '17'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
 
 configurations {
     compileOnly {
@@ -18,19 +23,22 @@ repositories {
     mavenCentral()
 }
 
+
 dependencies {
 
+    // Spring Boot
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
+    // Lombok
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
+    // Mapper
     implementation group: 'org.modelmapper', name: 'modelmapper', version: '3.1.1'
 
+    // JWT
     implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
     implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.5'
     runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.5'
@@ -40,12 +48,18 @@ dependencies {
     implementation group: 'com.sun.xml.bind', name: 'jaxb-core', version: '2.3.0.1'
     implementation group: 'com.sun.xml.bind', name: 'jaxb-impl', version: '2.3.1'
 
-
+    // OpenAPI
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
     implementation 'org.hibernate:hibernate-validator:8.0.0.Final'
 
+    // Database
     implementation 'com.h2database:h2:2.2.224'
     implementation 'org.mariadb.jdbc:mariadb-java-client:3.3.2'
+
+    // Test
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 tasks.named('test') {

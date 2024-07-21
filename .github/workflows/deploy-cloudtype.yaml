@@ -1,0 +1,74 @@
+name: Deploy to cloudtype
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build with Gradle
+        run: ./gradlew build
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Connect deploy key
+        uses: cloudtype-github-actions/connect@v1
+        with:
+          token: ${{ secrets.CLOUDTYPE_TOKEN }}
+          ghtoken: ${{ secrets.GHP_TOKEN }}
+
+      - name: Deploy
+        uses: cloudtype-github-actions/deploy@v1
+        with:
+          token: ${{ secrets.CLOUDTYPE_TOKEN }}
+          project: cmsong111/everytime
+          stage: main
+          yaml: |
+            name: everytime-server
+            app: java@17
+            options:
+              ports: 8080
+              env:
+                - name: DB_HOST
+                  value: mariadb
+                - name: DB_PORT
+                  value: "3306"
+                - name: DB_NAME
+                  value: everytime
+                - name: DB_USER
+                  secret: DB_USER
+                - name: DB_PASSWORD
+                  secret: mariadb-user-password
+                - name: DDL_MODE
+                  value: create
+                - name: JWT_SECRET
+                  secret: JWT_SECRET
+                - name: SPRING_PROFILES_ACTIVE
+                  value: release
+              buildenv: []
+            context:
+              git:
+                url: git@github.com:${{ github.repository }}.git
+                ref: ${{ github.ref }}
+              preset: java-springboot

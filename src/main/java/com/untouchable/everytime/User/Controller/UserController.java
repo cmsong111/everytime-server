@@ -1,6 +1,5 @@
 package com.untouchable.everytime.User.Controller;
 
-import com.untouchable.everytime.Config.JwtConfig;
 import com.untouchable.everytime.User.DTO.UserChangePasswordDTO;
 import com.untouchable.everytime.User.DTO.UserDTO;
 import com.untouchable.everytime.User.DTO.UserLoginDTO;
@@ -10,18 +9,17 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "사용자", description = "유저 정보 CRUD 관련 API")
 @RestController
-@AllArgsConstructor
+@RequiredArgsConstructor
 @RequestMapping("/user")
 public class UserController {
 
-    UserService userService;
-    JwtConfig jwtConfig;
+    private final UserService userService;
 
     @PostMapping("/login")
     @Operation(summary = "로그인", description = "ID, PWD를 입력받아 JWT 발급하는 기능")
