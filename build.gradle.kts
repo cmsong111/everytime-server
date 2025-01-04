@@ -35,7 +35,7 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok")
 
     // Logger
-    implementation("io.github.oshai:kotlin-logging-jvm:5.1.4")
+    implementation("io.github.oshai:kotlin-logging-jvm:7.0.0")
 
     // Mapper
     implementation("org.modelmapper:modelmapper:3.2.2")
