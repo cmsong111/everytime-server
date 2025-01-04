@@ -4,24 +4,20 @@ import com.untouchable.everytime.Lecture.DTO.LectureRateDTO;
 import com.untouchable.everytime.Lecture.Entity.LectureRateEntity;
 import com.untouchable.everytime.Lecture.Repository.LectureRateRepository;
 import com.untouchable.everytime.Lecture.Repository.LectureRepository;
-import com.untouchable.everytime.User.Repository.UserRepository;
+import com.untouchable.everytime.user.repository.UserJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
 public class LectureRateService {
 
-    private final  LectureRateRepository lectureRateRepository;
-    private final   LectureRepository lectureRepository;
-    private final  UserRepository userRepository;
+    private final LectureRateRepository lectureRateRepository;
+    private final LectureRepository lectureRepository;
+    private final UserJpaRepository userRepository;
     private final ModelMapper modelMapper;
-
 
 
     public ResponseEntity<LectureRateDTO> createLectureRate(LectureRateDTO lectureRateDTO, String token) {

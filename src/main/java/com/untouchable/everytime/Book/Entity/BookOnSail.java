@@ -1,13 +1,20 @@
 package com.untouchable.everytime.Book.Entity;
 
 import com.untouchable.everytime.Book.Enum.BookStatus;
-import com.untouchable.everytime.School.Entity.School;
-import com.untouchable.everytime.User.Entity.User;
-import jakarta.persistence.*;
-import lombok.*;
-import lombok.experimental.SuperBuilder;
-
+import com.untouchable.everytime.university.domain.University;
+import com.untouchable.everytime.user.domain.User;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import java.sql.Timestamp;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Setter
@@ -21,7 +28,7 @@ public class BookOnSail {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long BookOnSailPk;
     @ManyToOne
-    School school;
+    University school;
     @ManyToOne
     User user;
     String boardTitle;

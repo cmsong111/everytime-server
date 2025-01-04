@@ -1,14 +1,17 @@
 package com.untouchable.everytime.Mail.Entity;
 
 
-import com.untouchable.everytime.User.Entity.User;
-import jakarta.persistence.*;
+import com.untouchable.everytime.user.domain.User;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import java.sql.Date;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.sql.Date;
 
 @Entity
 @Data

@@ -1,8 +1,15 @@
 package com.untouchable.everytime.Lecture.Entity;
 
-import com.untouchable.everytime.Enum.LectureStatus;
-import com.untouchable.everytime.User.Entity.User;
-import jakarta.persistence.*;
+import com.untouchable.everytime.common.Enum.LectureStatus;
+import com.untouchable.everytime.user.domain.User;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -1,6 +1,6 @@
 package com.untouchable.everytime.Mail.Entity;
 
-import com.untouchable.everytime.User.Entity.User;
+import com.untouchable.everytime.user.domain.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;

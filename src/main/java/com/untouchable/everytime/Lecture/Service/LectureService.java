@@ -5,13 +5,12 @@ import com.untouchable.everytime.Lecture.DTO.LectureDTO;
 import com.untouchable.everytime.Lecture.Entity.LectureEntity;
 import com.untouchable.everytime.Lecture.Repository.LectureRepository;
 import io.jsonwebtoken.Claims;
+import java.util.ArrayList;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

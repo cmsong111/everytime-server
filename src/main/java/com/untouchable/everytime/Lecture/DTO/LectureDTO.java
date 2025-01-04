@@ -1,6 +1,6 @@
 package com.untouchable.everytime.Lecture.DTO;
 
-import com.untouchable.everytime.Enum.LectureType;
+import com.untouchable.everytime.common.Enum.LectureType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

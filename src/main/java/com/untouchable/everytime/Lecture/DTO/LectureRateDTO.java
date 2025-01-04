@@ -1,6 +1,6 @@
 package com.untouchable.everytime.Lecture.DTO;
 
-import com.untouchable.everytime.Enum.LectureStatus;
+import com.untouchable.everytime.common.Enum.LectureStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -29,10 +29,6 @@ public class LectureRateDTO {
     LectureStatus score;
 
     String userUserID;
-
-
-
-
 
 
 }

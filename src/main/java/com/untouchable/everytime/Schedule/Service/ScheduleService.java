@@ -3,14 +3,12 @@ package com.untouchable.everytime.Schedule.Service;
 import com.untouchable.everytime.Schedule.DTO.ScheduleDTO;
 import com.untouchable.everytime.Schedule.Entity.ScheduleEntity;
 import com.untouchable.everytime.Schedule.Repository.ScheduleRepository;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor

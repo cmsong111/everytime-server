@@ -1,8 +1,15 @@
 package com.untouchable.everytime.Lecture.Entity;
 
-import com.untouchable.everytime.Enum.LectureType;
-import com.untouchable.everytime.School.Entity.School;
-import jakarta.persistence.*;
+import com.untouchable.everytime.common.Enum.LectureType;
+import com.untouchable.everytime.university.domain.University;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,7 +30,7 @@ public class LectureEntity {
     LectureType lectureType;
 
     @ManyToOne
-    School school;
+    University school;
 
     int lectureNum;
     int separation;

@@ -7,7 +7,11 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/lectureRate")
@@ -20,12 +24,13 @@ public class LectureRateController {
     public LectureRateController(LectureRateService lectureRateService) {
         this.lectureRateService = lectureRateService;
     }
+
     @PostMapping("/create")
     @Operation(summary = "강의 평가 생성", description = "강의 평가 생성하는 API")
     public ResponseEntity<LectureRateDTO> createLectureRate(
             @RequestBody LectureRateDTO lectureRateDTO,
             @Parameter(name = "jwt", description = "유저 인증 토큰") @RequestHeader(value = "jwt") String token
     ) {
-        return lectureRateService.createLectureRate (lectureRateDTO, token);
+        return lectureRateService.createLectureRate(lectureRateDTO, token);
     }
 }

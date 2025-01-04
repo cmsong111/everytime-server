@@ -1,4 +1,4 @@
-package com.untouchable.everytime.Config;
+package com.untouchable.everytime.config;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
