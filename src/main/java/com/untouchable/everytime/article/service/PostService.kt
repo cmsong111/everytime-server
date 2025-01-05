@@ -8,6 +8,9 @@ import com.untouchable.everytime.article.repository.BoardJpaRepository
 import com.untouchable.everytime.article.repository.PostJpaRepository
 import com.untouchable.everytime.article.service.data.PostData
 import com.untouchable.everytime.article.service.data.PostSummaryData
+import com.untouchable.everytime.common.domain.PostNotFoundException
+import com.untouchable.everytime.common.domain.UserNotFoundException
+import com.untouchable.everytime.common.storage.StorageService
 import com.untouchable.everytime.user.repository.UserJpaRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -20,7 +23,7 @@ class PostService(
     private val boardJpaRepository: BoardJpaRepository,
     private val postJpaRepository: PostJpaRepository,
     private val userJpaRepository: UserJpaRepository,
-    // TODO: 이미지 저장소 추가
+    private val storageService: StorageService,
 ) {
 
     /**
@@ -50,9 +53,10 @@ class PostService(
         return PostData.from(
             postJpaRepository.save(
                 Post.create(
-                    board = boardJpaRepository.findByIdOrNull(boardId) ?: throw IllegalArgumentException("Board not found"),
-                    author = userJpaRepository.findByIdOrNull(userId) ?: throw IllegalArgumentException("User not found"),
+                    board = boardJpaRepository.findByIdOrNull(boardId) ?: throw PostNotFoundException(),
+                    author = userJpaRepository.findByIdOrNull(userId) ?: throw UserNotFoundException(),
                     postForm = postForm,
+                    images = postForm.images?.let { storageService.saveAll(it) } ?: emptyList()
                 )
             )
         )

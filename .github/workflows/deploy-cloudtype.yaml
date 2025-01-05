@@ -38,6 +38,8 @@ jobs:
                   value: everytime
                 - name: SPRING_PROFILES_ACTIVE
                   value: release
+                - name: IMGBB_API_KEY
+                  secret: imgbb-api
               buildenv: []
             context:
               git:

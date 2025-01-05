@@ -1,5 +1,4 @@
 spring:
-
   datasource:
     url: jdbc:h2:mem:testdb?DB_MODE=MYSQL
     username: sa
@@ -23,11 +22,20 @@ spring:
     init:
       mode: always
 
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
+
 jwt:
   issuer: ${ISSUER:untouchable.com}
   secret_key: ${JWT_SECRET:dGhpcy1pcy1zZWNyZXQta2V5LXJlcGxhY2Utd2l0aC15b3VyLW93bi1zZWNyZXQta2V5} # this-is-secret-key-replace-with-your-own-secret-key
   access_token_expiration: 1800 # 30 minutes
   refresh_token_expiration: 86400000 # 1 day
+
+storage:
+  imgbb:
+    api-key: ${IMGBB_API_KEY:your-imgbb-api-key}
 
 springdoc:
   swagger-ui:

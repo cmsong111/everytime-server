@@ -72,6 +72,7 @@ class Post(
             board: Board,
             author: User,
             postForm: PostForm,
+            images: List<String> = emptyList(),
         ): Post {
             return Post(
                 board = board,
@@ -79,6 +80,7 @@ class Post(
                 isAnonymous = postForm.isAnonymous,
                 title = postForm.title,
                 content = postForm.content,
+                images = images.mapIndexed { index, url -> Image(url, index) }.toSet(),
             )
         }
     }

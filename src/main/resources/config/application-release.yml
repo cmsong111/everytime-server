@@ -18,11 +18,20 @@ spring:
 
     defer-datasource-initialization: true
 
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
+
 jwt:
-  secret-key: ${JWT_SECRET:dGhpcy1pcy1zZWNyZXQta2V5LXJlcGxhY2Utd2l0aC15b3VyLW93bi1zZWNyZXQta2V5}
-  expiration: 1800000
-  refresh-token:
-    expiration: 86400000000
+  issuer: ${ISSUER:untouchable.com}
+  secret_key: ${JWT_SECRET:dGhpcy1pcy1zZWNyZXQta2V5LXJlcGxhY2Utd2l0aC15b3VyLW93bi1zZWNyZXQta2V5} # this-is-secret-key-replace-with-your-own-secret-key
+  access_token_expiration: 1800 # 30 minutes
+  refresh_token_expiration: 86400000 # 1 day
+
+stroage:
+  imgbb:
+    api-key: ${IMGBB_API_KEY:your-imgbb-api-key}
 
 springdoc:
   swagger-ui:
