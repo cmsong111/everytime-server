@@ -3,6 +3,7 @@ package com.untouchable.everytime.common.domain
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.authorization.AuthorizationDeniedException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestControllerAdvice
@@ -52,6 +53,18 @@ class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(
             mapOf(
                 "code" to e.code,
+                "message" to e.message
+            )
+        )
+    }
+
+    @ExceptionHandler(AuthorizationDeniedException::class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    fun handleDomainException(e: AuthorizationDeniedException): ResponseEntity<Any?> {
+        log.debug { "DomainException: ${e.message}" }
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(
+            mapOf(
+                "code" to "FORBIDDEN",
                 "message" to e.message
             )
         )

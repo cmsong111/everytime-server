@@ -24,6 +24,7 @@ class BoardController(
     private val boardService: BoardService,
 ) {
     @GetMapping
+    @Operation(summary = "게시판 목록 조회", description = "사용자가 속한 대학교의 게시판 목록을 조회합니다.")
     fun getBoards(
         @AuthenticationPrincipal authenticatedUser: AuthenticatedUser
     ): List<BoardData> {

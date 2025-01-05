@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import io.swagger.v3.oas.annotations.tags.Tag
 import java.net.URI
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.PatchMapping
@@ -30,6 +31,7 @@ class CommentController(
 
     @PostMapping
     @Operation(summary = "댓글 작성", description = "댓글 작성")
+    @PreAuthorize("@articleAccessHandler.isAccessiblePost(#authenticatedUser, #commentForm.postId)")
     fun createComment(
         @RequestBody commentForm: CommentForm,
         @AuthenticationPrincipal authenticatedUser: AuthenticatedUser,
@@ -43,6 +45,7 @@ class CommentController(
 
     @PatchMapping("/{commentId}")
     @Operation(summary = "댓글 수정", description = "댓글 수정")
+    @PreAuthorize("@articleAccessHandler.isAccessibleComment(#authenticatedUser, #commentId)")
     fun updateComment(
         @PathVariable commentId: Long,
         @RequestBody commentForm: CommentForm,
@@ -58,6 +61,7 @@ class CommentController(
 
     @DeleteMapping("/{commentId}")
     @Operation(summary = "댓글 삭제", description = "댓글 삭제")
+    @PreAuthorize("@articleAccessHandler.isAccessibleComment(#authenticatedUser, #commentId)")
     fun deleteComment(
         @PathVariable commentId: Long,
         @AuthenticationPrincipal authenticatedUser: AuthenticatedUser,
@@ -71,6 +75,7 @@ class CommentController(
 
     @PostMapping("/{commentId}/like")
     @Operation(summary = "댓글 좋아요", description = "댓글 좋아요. 좋아요 수 반환")
+    @PreAuthorize("@articleAccessHandler.isAccessibleComment(#authenticatedUser, #commentId)")
     fun likeComment(
         @PathVariable commentId: Long,
         @AuthenticationPrincipal authenticatedUser: AuthenticatedUser,
@@ -85,6 +90,7 @@ class CommentController(
 
     @DeleteMapping("/{commentId}/like")
     @Operation(summary = "댓글 좋아요 취소", description = "댓글 좋아요 취소")
+    @PreAuthorize("@articleAccessHandler.isAccessibleComment(#authenticatedUser, #commentId)")
     fun unlikeComment(
         @PathVariable commentId: Long,
         @AuthenticationPrincipal authenticatedUser: AuthenticatedUser,
@@ -99,6 +105,7 @@ class CommentController(
 
     @PostMapping("/{commentId}/report")
     @Operation(summary = "댓글 신고", description = "댓글 신고")
+    @PreAuthorize("@articleAccessHandler.isAccessibleComment(#authenticatedUser, #commentId)")
     fun reportComment(
         @PathVariable commentId: Long,
         @RequestParam reason: ReportType,
@@ -117,8 +124,8 @@ class CommentController(
     }
 
     @PostMapping("/{commentId}/reply")
-    @Operation(summary = "댓글 답글", description = "댓글 답글")
+    @Operation(summary = "댓글 답글", description = "댓글 답글", deprecated = true)
     fun replyComment() {
-
+        TODO("Not yet implemented")
     }
 }

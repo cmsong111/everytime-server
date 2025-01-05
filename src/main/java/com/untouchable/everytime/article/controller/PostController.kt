@@ -16,6 +16,7 @@ import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
 import org.springframework.data.web.PageableDefault
 import org.springframework.http.MediaType
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -28,7 +29,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
-@Tag(name = "5. Post", description = "게시글 관련 API")
+@Tag(name = "5. Post", description = "게시글 관련 API (공통적으로 본인이 소속된 학교의 게시판만 조회할 수 있습니다.)")
 @RestController
 @RequestMapping("/v1/api/posts")
 @SecurityRequirement(name = BEARER_AUTH)
@@ -37,6 +38,7 @@ class PostController(
 ) {
     @Operation(summary = "게시글 목록 조회")
     @GetMapping("/{boardId}")
+    @PreAuthorize("@articleAccessHandler.isAccessibleBoard(#authenticatedUser, #boardId)")
     fun getPost(
         @PathVariable boardId: Long,
         @ParameterObject @PageableDefault(size = 20, sort = ["createdAt"], direction = Sort.Direction.DESC) pageable: Pageable,
@@ -47,6 +49,7 @@ class PostController(
 
     @Operation(summary = "게시글 작성")
     @PostMapping("/{boardId}", consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])
+    @PreAuthorize("@articleAccessHandler.isAccessibleBoard(#authenticatedUser, #boardId)")
     fun createPost(
         @PathVariable boardId: Long,
         @AuthenticationPrincipal authenticatedUser: AuthenticatedUser,
@@ -57,6 +60,7 @@ class PostController(
 
     @Operation(summary = "게시글 수정")
     @PatchMapping("/{boardId}/{postId}")
+    @PreAuthorize("@articleAccessHandler.isAccessibleBoard(#authenticatedUser, #boardId)")
     fun updatePost(
         @PathVariable boardId: Long,
         @PathVariable postId: Long,
@@ -68,6 +72,7 @@ class PostController(
 
     @Operation(summary = "게시글 삭제")
     @DeleteMapping("/{boardId}/{postId}")
+    @PreAuthorize("@articleAccessHandler.isAccessibleBoard(#authenticatedUser, #boardId)")
     fun deletePost(
         @PathVariable boardId: Long,
         @PathVariable postId: Long,
@@ -79,6 +84,7 @@ class PostController(
 
     @Operation(summary = "게시글 상세 조회")
     @GetMapping("/{boardId}/{postId}")
+    @PreAuthorize("@articleAccessHandler.isAccessibleBoard(#authenticatedUser, #boardId)")
     fun getPostDetail(
         @PathVariable boardId: Long,
         @PathVariable postId: Long,
@@ -89,6 +95,7 @@ class PostController(
 
     @Operation(summary = "게시글 추천")
     @PostMapping("/{boardId}/{postId}/like")
+    @PreAuthorize("@articleAccessHandler.isAccessibleBoard(#authenticatedUser, #boardId)")
     fun likePost(
         @PathVariable boardId: Long,
         @PathVariable postId: Long,
@@ -99,6 +106,7 @@ class PostController(
 
     @Operation(summary = "게시글 추천 취소")
     @DeleteMapping("/{boardId}/{postId}/like")
+    @PreAuthorize("@articleAccessHandler.isAccessibleBoard(#authenticatedUser, #boardId)")
     fun unlikePost(
         @PathVariable boardId: Long,
         @PathVariable postId: Long,
@@ -109,6 +117,7 @@ class PostController(
 
     @Operation(summary = "게시글 신고")
     @PostMapping("/{boardId}/{postId}/report")
+    @PreAuthorize("@articleAccessHandler.isAccessibleBoard(#authenticatedUser, #boardId)")
     fun reportPost(
         @PathVariable boardId: Long,
         @PathVariable postId: Long,
@@ -120,6 +129,7 @@ class PostController(
 
     @Operation(summary = "게시글 스크랩")
     @PostMapping("/{boardId}/{postId}/scrap")
+    @PreAuthorize("@articleAccessHandler.isAccessibleBoard(#authenticatedUser, #boardId)")
     fun scrapPost(
         @PathVariable boardId: Long,
         @PathVariable postId: Long,
@@ -130,7 +140,8 @@ class PostController(
 
     @Operation(summary = "게시글 스크랩 취소")
     @DeleteMapping("/{boardId}/{postId}/scrap")
-    fun unscrapPost(
+    @PreAuthorize("@articleAccessHandler.isAccessibleBoard(#authenticatedUser, #boardId)")
+    fun unScrapPost(
         @PathVariable boardId: Long,
         @PathVariable postId: Long,
         @AuthenticationPrincipal authenticatedUser: AuthenticatedUser,

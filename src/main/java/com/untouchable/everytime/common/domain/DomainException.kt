@@ -44,6 +44,10 @@ data class UserNotFoundException(
     override val message: String = "존재하지 않는 유저입니다.",
 ) : NotFoundException("USER_NOT_FOUND", message)
 
+data class PostNotFoundException(
+    override val message: String = "존재하지 않는 게시글입니다.",
+) : NotFoundException("POST_NOT_FOUND", message)
+
 data class UserConflictException(
     override val message: String = "이미 존재하는 유저입니다.",
 ) : ConflictException("USER_CONFLICT", message)
