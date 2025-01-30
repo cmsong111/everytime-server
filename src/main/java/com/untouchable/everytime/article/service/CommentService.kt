@@ -1,6 +1,7 @@
 package com.untouchable.everytime.article.service
 
 import com.untouchable.everytime.article.controller.data.CommentForm
+import com.untouchable.everytime.article.domain.AnonymousTable
 import com.untouchable.everytime.article.domain.Comment
 import com.untouchable.everytime.article.domain.Post
 import com.untouchable.everytime.article.domain.ReportType
@@ -30,6 +31,23 @@ class CommentService(
 
         val user = userJpaRepository.findByIdOrNull(userId)
             ?: throw IllegalArgumentException("사용자가 존재하지 않습니다.")
+
+        // 익명인 경우 익명 번호 발급
+        // 공개 게시글에 본인이 익명으로 댓글을 달 경우 익명 번호 발급
+        if (commentForm.isAnonymous && !post.anonymousTable.map { it.user }.contains(user)) {
+            if (post.author.id == userId && post.isAnonymous) {
+                // 본인의 익명 게시글에 익명 댓글을 달 경우 익명 번호 발급하지 않음
+            } else {
+                // 익명 최대번호 조회
+                val maxNumber = post.anonymousTable.maxOfOrNull { it.number } ?: 0
+                post.anonymousTable.add(
+                    AnonymousTable(
+                        user = user,
+                        number = maxNumber + 1,
+                    )
+                )
+            }
+        }
 
         commentJpaRepository.save(
             Comment.create(

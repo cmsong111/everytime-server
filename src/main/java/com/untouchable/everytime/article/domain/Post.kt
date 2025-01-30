@@ -42,6 +42,13 @@ class Post(
     @ElementCollection(fetch = FetchType.LAZY)
     val images: Set<Image> = setOf(),
 
+    /**
+     * 익명 테이블
+     * 익명1, 익명2 등
+     */
+    @ElementCollection(fetch = FetchType.LAZY)
+    val anonymousTable: MutableSet<AnonymousTable> = mutableSetOf(),
+
     /** 좋아요 */
     @OneToMany(fetch = FetchType.LAZY)
     val likes: MutableSet<User> = mutableSetOf(),

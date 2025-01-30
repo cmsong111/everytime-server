@@ -17,10 +17,7 @@ data class PostSummaryData(
         fun from(post: Post): PostSummaryData {
             return PostSummaryData(
                 id = post.id,
-                authorName = AuthorData.from(
-                    isAnonymous = post.isAnonymous,
-                    author = post.author,
-                ).name,
+                authorName = if (post.isAnonymous) "익명" else post.author.nickname,
                 title = post.title,
                 content = post.content,
                 thumbnail = post.images.minByOrNull { it.order }?.url,

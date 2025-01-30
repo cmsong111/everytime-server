@@ -34,21 +34,21 @@ values (1, 'HOME', 'https://www.ks.ac.kr/'),
 INSERT INTO users (id, name, nickname, email, password, entrance_year, university_id, profile_image, is_deleted, created_at, updated_at)
 VALUES ('admin', '슈퍼 관리자', '슈퍼 관리자', 'admin@admin.com', '$2a$10$Q6C5yL2bm63Z9Y7bjisXVeXbVcVBrkwFtWy.uypxg17OcXFkcASji', 2019, 1,
         'https://picsum.photos/id/1/200/300', FALSE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-       ('user1', '일반 사용자', '일반 사용자', 'user1@user.com', '$2a$10$LVWdE/9aFCjJlYLZdt735.pQ67duGC4danDyMiCVYFFD6eMbELwym', 2019, 1,
+       ('user1', '일반 사용자 1', '일반 사용자 1', 'user1@user.com', '$2a$10$LVWdE/9aFCjJlYLZdt735.pQ67duGC4danDyMiCVYFFD6eMbELwym', 2019, 1,
         'https://picsum.photos/id/2/200/300', FALSE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-       ('user2', '일반 사용자', '일반 사용자', 'user2@user.com', '$2a$10$LVWdE/9aFCjJlYLZdt735.pQ67duGC4danDyMiCVYFFD6eMbELwym', 2019, 2,
+       ('user2', '일반 사용자 2', '일반 사용자 2', 'user2@user.com', '$2a$10$LVWdE/9aFCjJlYLZdt735.pQ67duGC4danDyMiCVYFFD6eMbELwym', 2019, 2,
         'https://picsum.photos/id/3/200/300', FALSE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-       ('user3', '일반 사용자', '일반 사용자', 'user3@user.com', '$2a$10$LVWdE/9aFCjJlYLZdt735.pQ67duGC4danDyMiCVYFFD6eMbELwym', 2019, 3,
+       ('user3', '일반 사용자 3', '일반 사용자 3', 'user3@user.com', '$2a$10$LVWdE/9aFCjJlYLZdt735.pQ67duGC4danDyMiCVYFFD6eMbELwym', 2019, 3,
         'https://picsum.photos/id/4/200/300', FALSE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-       ('user4', '일반 사용자', '일반 사용자', 'user4@user.com', '$2a$10$LVWdE/9aFCjJlYLZdt735.pQ67duGC4danDyMiCVYFFD6eMbELwym', 2019, 4,
+       ('user4', '일반 사용자 4', '일반 사용자 4', 'user4@user.com', '$2a$10$LVWdE/9aFCjJlYLZdt735.pQ67duGC4danDyMiCVYFFD6eMbELwym', 2019, 4,
         'https://picsum.photos/id/5/200/300', FALSE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-       ('user5', '일반 사용자', '일반 사용자', 'user5@user.com', '$2a$10$LVWdE/9aFCjJlYLZdt735.pQ67duGC4danDyMiCVYFFD6eMbELwym', 2019, 5,
+       ('user5', '일반 사용자 5', '일반 사용자 5', 'user5@user.com', '$2a$10$LVWdE/9aFCjJlYLZdt735.pQ67duGC4danDyMiCVYFFD6eMbELwym', 2019, 5,
         'https://picsum.photos/id/6/200/300', FALSE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-       ('user6', '일반 사용자', '일반 사용자', 'user6@user.com', '$2a$10$LVWdE/9aFCjJlYLZdt735.pQ67duGC4danDyMiCVYFFD6eMbELwym', 2019, 6,
+       ('user6', '일반 사용자 6', '일반 사용자 6', 'user6@user.com', '$2a$10$LVWdE/9aFCjJlYLZdt735.pQ67duGC4danDyMiCVYFFD6eMbELwym', 2019, 6,
         'https://picsum.photos/id/7/200/300', FALSE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-       ('user7', '일반 사용자', '일반 사용자', 'user7@user.com', '$2a$10$LVWdE/9aFCjJlYLZdt735.pQ67duGC4danDyMiCVYFFD6eMbELwym', 2019, 7,
+       ('user7', '일반 사용자 7', '일반 사용자 7', 'user7@user.com', '$2a$10$LVWdE/9aFCjJlYLZdt735.pQ67duGC4danDyMiCVYFFD6eMbELwym', 2019, 7,
         'https://picsum.photos/id/8/200/300', FALSE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-       ('user8', '일반 사용자', '일반 사용자', 'user8@user.com', '$2a$10$LVWdE/9aFCjJlYLZdt735.pQ67duGC4danDyMiCVYFFD6eMbELwym', 2019, 8,
+       ('user8', '일반 사용자 8', '일반 사용자 8', 'user8@user.com', '$2a$10$LVWdE/9aFCjJlYLZdt735.pQ67duGC4danDyMiCVYFFD6eMbELwym', 2019, 8,
         'https://picsum.photos/id/9/200/300', FALSE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 
@@ -89,3 +89,29 @@ values ('자유게시판', '자유게시판', 'DEFAULT', 8, 'admin', FALSE, CURR
        ('🏋🏻헬스/운동 게시판🏋🏻‍♂️', '🏋🏻헬스/운동 게시판🏋🏻‍♂️', 'ETC', 8, 'admin', FALSE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
        ('게시판 찾기', '게시판 찾기', 'ETC', 8, 'admin', FALSE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
+
+
+insert into post (title, content, author_id, board_id, is_anonymous, is_deleted, comment_count, like_count, scrap_count, created_at, updated_at)
+values ('안녕하세요!', '안녕하세요! 만나서 반가워요', 'user8', 1, TRUE, FALSE, 0, 0, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+       ('안녕히계세요', '만나서 즐거웠어요 안녕!', 'user8', 1, FALSE, FALSE, 0, 0, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+insert into post_images (post_id, url, image_order)
+values (1, 'https://picsum.photos/id/3/200/300', 1),
+       (1, 'https://picsum.photos/id/4/200/300', 2),
+       (1, 'https://picsum.photos/id/5/200/300', 3),
+       (1, 'https://picsum.photos/id/6/200/300', 4);
+
+insert into comment (post_id, author_id, content, is_anonymous, like_count, is_deleted, created_at, updated_at)
+values (1, 'user7', '안녕하세요! 반가워요!', TRUE, 0, FALSE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+       (1, 'user6', '안녕하세요! 반가워요!', TRUE, 0, FALSE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+       (1, 'user5', '안녕하세요! 반가워요!', TRUE, 0, FALSE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+       (1, 'user8', '안녕하세요! 반가워요!', TRUE, 0, FALSE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+       (1, 'user5', '안녕하세요! 반가워요!', TRUE, 0, FALSE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+       (1, 'user5', '안녕하세요! 반가워요!', TRUE, 0, FALSE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+       (1, 'user6', '안녕하세요! 반가워요!', TRUE, 0, FALSE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+
+insert into post_anonymous_table (number, post_id, user_id)
+values (1, 1, 'user7'),
+       (2, 1, 'user6'),
+       (3, 1, 'user5');

@@ -1,6 +1,7 @@
 package com.untouchable.everytime.article.service
 
 import com.untouchable.everytime.article.controller.data.PostForm
+import com.untouchable.everytime.article.domain.AnonymousTable
 import com.untouchable.everytime.article.domain.Post
 import com.untouchable.everytime.article.domain.Report
 import com.untouchable.everytime.article.domain.ReportType
@@ -74,6 +75,15 @@ class PostService(
         val post = postJpaRepository.findByIdOrNull(postId) ?: throw IllegalArgumentException("Post not found")
         require(post.author.id == userId) { "User is not author" }
         post.update(postForm)
+        // 댓글에 대한 처리
+        if (post.comments.find { it.author.id == userId } != null) {
+            post.anonymousTable.add(
+                AnonymousTable(
+                    user = userJpaRepository.findByIdOrNull(userId) ?: throw IllegalArgumentException("User not found"),
+                    number = post.anonymousTable.maxOfOrNull { it.number }?.plus(1) ?: 1
+                )
+            )
+        }
         return PostData.from(post)
     }
 
