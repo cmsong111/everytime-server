@@ -1,7 +1,7 @@
 plugins {
     kotlin("jvm") version "1.9.25"
     kotlin("plugin.spring") version "1.9.25"
-    id("org.springframework.boot") version "3.4.1"
+    id("org.springframework.boot") version "3.4.2"
     id("io.spring.dependency-management") version "1.1.7"
     kotlin("plugin.jpa") version "1.9.25"
 }
@@ -19,8 +19,6 @@ repositories {
     mavenCentral()
 }
 
-
-
 dependencies {
 
     // Spring Boot
@@ -35,7 +33,7 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok")
 
     // Logger
-    implementation("io.github.oshai:kotlin-logging-jvm:7.0.0")
+    implementation("io.github.oshai:kotlin-logging-jvm:7.0.3")
 
     // Mapper
     implementation("org.modelmapper:modelmapper:3.2.2")
@@ -48,7 +46,7 @@ dependencies {
     runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.12.6")
 
     // OpenAPI
-    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0")
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.4")
     implementation("org.hibernate.validator:hibernate-validator:8.0.2.Final")
 
     // Database
