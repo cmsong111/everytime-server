@@ -59,14 +59,6 @@ class Comment(
         }
     }
 
-    fun update(
-        content: String,
-        isAnonymous: Boolean,
-    ) {
-        this.content = content
-        this.isAnonymous = isAnonymous
-    }
-
     /**
      * 좋아요
      * @param user 좋아요 누른 사용자

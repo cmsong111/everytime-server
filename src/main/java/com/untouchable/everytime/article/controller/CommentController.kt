@@ -43,22 +43,6 @@ class CommentController(
         return ResponseEntity.created(URI("/v1/api/post/${commentForm.boardId}/${commentForm.postId}")).build()
     }
 
-    @PatchMapping("/{commentId}")
-    @Operation(summary = "댓글 수정", description = "댓글 수정")
-    @PreAuthorize("@articleAccessHandler.isAccessibleComment(#authenticatedUser, #commentId)")
-    fun updateComment(
-        @PathVariable commentId: Long,
-        @RequestBody commentForm: CommentForm,
-        @AuthenticationPrincipal authenticatedUser: AuthenticatedUser,
-    ): ResponseEntity<Unit> {
-        commentService.updateComment(
-            commentId = commentId,
-            commentForm = commentForm,
-            userId = authenticatedUser.userId
-        )
-        return ResponseEntity.ok().build()
-    }
-
     @DeleteMapping("/{commentId}")
     @Operation(summary = "댓글 삭제", description = "댓글 삭제")
     @PreAuthorize("@articleAccessHandler.isAccessibleComment(#authenticatedUser, #commentId)")

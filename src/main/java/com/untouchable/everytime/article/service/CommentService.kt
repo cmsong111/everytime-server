@@ -44,26 +44,6 @@ class CommentService(
     }
 
     /**
-     * 댓글 수정
-     */
-    @Transactional
-    fun updateComment(
-        commentId: Long,
-        commentForm: CommentForm,
-        userId: String,
-    ) {
-        val comment: Comment = commentJpaRepository.findByIdOrNull(commentId)
-            ?: throw IllegalArgumentException("댓글이 존재하지 않습니다.")
-
-        require(comment.author.id == userId) { "댓글 작성자만 수정할 수 있습니다." }
-
-        comment.update(
-            content = commentForm.content,
-            isAnonymous = commentForm.isAnonymous,
-        )
-    }
-
-    /**
      * 댓글 삭제
      */
     @Transactional
